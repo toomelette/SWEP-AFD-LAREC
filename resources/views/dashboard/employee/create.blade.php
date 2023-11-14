@@ -515,10 +515,10 @@
                          'cols' => 2,
                          'type' => 'date',
                         ]) !!}
-                        {!! \App\Swep\ViewHelpers\__form2::select('project_id',[
+                        {!! \App\Swep\ViewHelpers\__form2::select('station',[
                          'label' => 'Station:',
                          'cols' => 2,
-                         'options' => $global_projects_all->pluck('project_address','project_id')->toArray(),
+                         'options' => ['QC' => 'QC', 'VIS' => 'VIS'],
                         ]) !!}
                         {!! \App\Swep\ViewHelpers\__form2::select('is_active',[
                          'label' => 'Status *:',

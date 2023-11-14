@@ -56,7 +56,7 @@ class EmployeeFormRequest extends FormRequest{
             'gov_id'=>'nullable|string|max:20',
             'license_passport_no'=>'nullable|string|max:20',
             'id_date_issue'=>'nullable|string|max:45',
-
+            'station' => 'required|string',
 
             // Address
             'res_address_block'=>'nullable|string|max:90',

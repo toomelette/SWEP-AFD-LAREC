@@ -45,6 +45,11 @@
         display: none;
     }
 
+
+    div.footer {
+        position: fixed;
+        bottom: 0;
+    }
 }
 
 body{
@@ -78,6 +83,9 @@ table.print-table th,table.print-table td{
 }
 
 .tbl-bordered>thead>tr>th, .tbl-bordered>tbody>tr>th, .tbl-bordered>tfoot>tr>th, .tbl-bordered>thead>tr>td, .tbl-bordered>tbody>tr>td, .tbl-bordered>tfoot>tr>td{
+    border: 1px solid black;
+}
+.tbl-bordered-header>thead>tr>th, .tbl-bordered-header>tbody>tr>th, .tbl-bordered-header>tfoot>tr>th{
     border: 1px solid black;
 }
 .tbl-padded>thead>tr>th, .tbl-padded>tbody>tr>th, .tbl-padded>tfoot>tr>th, .tbl-padded>thead>tr>td, .tbl-padded>tbody>tr>td, .tbl-padded>tfoot>tr>td{

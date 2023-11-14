@@ -537,6 +537,14 @@ class DTRController extends  Controller
                         $daily_time_record->calculated = null;
                         $daily_time_record->save();
                     }
+                }else{
+                    $daily_time_record = DailyTimeRecord::query()
+                        ->where('biometric_user_id','=',$request->biometric_user_id)
+                        ->where('date',Carbon::parse($request->date)->format('Y-m-d'))
+                        ->first();
+
+                    $daily_time_record->{$request->type} = null;
+                    $daily_time_record->save();
                 }
 
                 //abort(503,'TIME MUST NOT NULL.');
