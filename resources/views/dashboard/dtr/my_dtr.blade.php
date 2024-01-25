@@ -190,6 +190,10 @@
     </script>
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
+        $('#dtr_modal').on('shown.bs.modal', function() {
+            $(document).off('focusin.modal');
+        });
+
         $(document).ready(function () {
 
 

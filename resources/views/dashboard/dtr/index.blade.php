@@ -164,6 +164,11 @@
         }
     </script>
     <script type="text/javascript">
+        $('#dtr_modal').on('shown.bs.modal', function() {
+            $(document).off('focusin.modal');
+        });
+
+
         //-----DATATABLES-----//
         modal_loader = $("#modal_loader").parent('div').html();
         //Initialize DataTable
@@ -226,9 +231,9 @@
             }
           }
         })
-        
+
         style_datatable("#dtr_table");
-        
+
         //Need to press enter to search
         $('#dtr_table_filter input').unbind();
         $('#dtr_table_filter input').bind('keyup', function (e) {
