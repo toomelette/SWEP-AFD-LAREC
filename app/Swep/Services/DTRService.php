@@ -42,7 +42,7 @@ class DTRService extends BaseService
             $server_location = SuSettings::query()->where('setting','=','server_location')->first()->string_value;
 
             $last_from_device = $last_uid + 1000;
-
+            abort(503,'Last:'.$last_from_device);
             $attendances_array = [];
             for ($x = $last_uid+1 ; $x <= $last_from_device ; $x++){
                 if(isset($attendances[$x])){
