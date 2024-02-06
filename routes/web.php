@@ -505,6 +505,8 @@ Route::get('/getSerial',function (\Illuminate\Http\Request $request){
 
 
 
+
+
 Route::get('/acc',function (){
     $a = \App\Models\UserSubmenu::query()->where('user_id','=',\Illuminate\Support\Facades\Auth::user()->user_id)
         ->leftJoin('su_submenus','su_submenus.submenu_id','=','su_user_submenus.submenu_id')
