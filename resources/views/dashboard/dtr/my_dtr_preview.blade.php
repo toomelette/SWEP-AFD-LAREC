@@ -191,6 +191,7 @@
 {{--                                        @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}
 {{--                                            <span class="text-danger">INC</span>--}}
 {{--                                        @endif--}}
+
                                             <span class="text-red">{{$dtr_array[$month.'-'.$date]->remarks}}</span>
                                     </td>
                                 </tr>

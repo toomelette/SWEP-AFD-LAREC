@@ -1,7 +1,7 @@
 @extends('layouts.modal-content',['decolor'=> 1])
 
 @section('modal-header')
-{{$employee->lastname}}, {{$employee->firstname}} {{strtoupper($employee->name_ext)}}
+{{$employee->lastname}}, {{$employee->firstname}} {{strtoupper($employee->name_ext)}} | {{$employee->employee_no}}
 @endsection
 
 @section('modal-body')

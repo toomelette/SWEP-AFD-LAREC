@@ -155,16 +155,7 @@ class DTRController extends  Controller
 
     public function show($slug){
         $p_employee = Employee::query()->where('slug','=',$slug)->first();
-        if(empty($p_employee)){
-            $jo_employee = JoEmployees::query()->where('slug','=',$slug)->first();
-            if(empty($jo_employee)){
-                abort(500,'Employee not found');
-            }else{
-                $employee = $jo_employee;
-            }
-        }else{
-            $employee = $p_employee;
-        }
+        $employee = $p_employee;
 
         $dtr_by_year = [];
         $firstDtr = DailyTimeRecord::query()->orderBy('date')->first();
@@ -178,15 +169,6 @@ class DTRController extends  Controller
             $start = Carbon::parse($start)->addMonth(1);
         }
 
-//        if(!empty($employee->dtr_records)){
-//            $dtr_records = $employee->dtr_records()->orderBy('date','desc')->get();
-//            if($dtr_records->count() > 0){
-//                foreach ($dtr_records as $dtr_record) {
-//                    $dtr_by_year[Carbon::parse($dtr_record->date)->format('Y')][Carbon::parse($dtr_record->date)->format('Y-m')] = null;
-//                }
-//            }
-//        }
-//        dd($dtr_by_year);
         krsort($dtr_by_year);
 
         if($p_employee->biometric_user_id == 1042){
@@ -205,7 +187,6 @@ class DTRController extends  Controller
         return view('dashboard.dtr.show')->with([
             'section' => $sections['content2'],
             'employee' => $employee,
-
         ]);
     }
     public function myDtr(){
@@ -599,20 +580,23 @@ class DTRController extends  Controller
     }
 
     public function updateRemarks(Request $request){
+
         $request->validate(['remark' => 'required|string|max:10']);
         if(!empty(\App\Swep\Helpers\Helper::checkRouteAccess('dashboard.dtr.store')) || $request->biometric_user_id == \Illuminate\Support\Facades\Auth::user()->employee->biometric_user_id){
             $dtr = DailyTimeRecord::query()
                 ->where('biometric_user_id','=',$request->biometric_user_id)
                 ->where('date','=',$request->date)
                 ->first();
+
             if(!empty($dtr)){
                 $dtr->remarks = $request->remark;
                 $dtr->remarks_updated_at = Carbon::now();
                 $dtr->remarks_user_updated = Auth::user()->user_id;
-                $dtr->save();
+                $dtr->update();
                 return $request->only(['element_id','remark']);
             }else{
                 $d = new DailyTimeRecord;
+                $d->slug = Str::random(25);
                 $d->employee_no = $request->employee_no;
                 $d->biometric_user_id = $request->biometric_user_id;
                 $d->date = $request->date;
@@ -620,9 +604,10 @@ class DTRController extends  Controller
                 $d->remarks_updated_at = Carbon::now();
                 $d->remarks_user_updated = Auth::user()->user_id;
                 $d->save();
-                return $request->only(['element_id','remark']);
+                return $request->only(['element_id','remark','slug']);
             }
         }
+
         abort(503,'You are not allowed to perform this action.');
     }
 
