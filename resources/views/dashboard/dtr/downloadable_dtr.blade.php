@@ -222,7 +222,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="text-left">HOL</td>
+                            <td class="text-left">{{$holidays[$month.'-'.$date]['name'] ?? ''}}</td>
                             {{--                            <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b></td>--}}
                         </tr>
                     @else
@@ -437,7 +437,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="text-left">HOL</td>
+                            <td class="text-left">{{$holidays[$month.'-'.$date]['name'] ?? ''}}</td>
                             {{--                            <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b></td>--}}
                         </tr>
                     @else

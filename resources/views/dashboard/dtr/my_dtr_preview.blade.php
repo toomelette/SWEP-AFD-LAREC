@@ -225,7 +225,7 @@
                                                 SUN
                                             @endif
                                             @if(isset($holidays[$month.'-'.$date]))
-                                                <b>HOL</b>
+                                                <b>{{$holidays[$month.'-'.$date]['name'] ?? ''}}</b>
                                             @endif
 
                                         </td>
