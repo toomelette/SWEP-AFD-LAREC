@@ -177,7 +177,7 @@ class DTRService extends BaseService
                     ->orWhere('calculated' , '=' ,0)
                     ->orWhere('calculated' , '=' ,-1);
             })
-            ->where('date' ,'>',Carbon::now()->subMonths(2))
+            ->where('date' ,'>',Carbon::now()->subMonths(1))
             ->get();
         dd($dtrs);
 
