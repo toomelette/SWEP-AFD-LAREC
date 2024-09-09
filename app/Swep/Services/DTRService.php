@@ -9,11 +9,13 @@ use App\Models\CronLogs;
 use App\Models\DailyTimeRecord;
 use App\Models\DTR;
 use App\Models\Employee;
+use App\Models\Holiday;
 use App\Models\JoEmployees;
 use App\Models\SuSettings;
 use App\Swep\BaseClasses\BaseService;
 use App\Swep\Helpers\Helper;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -162,6 +164,7 @@ class DTRService extends BaseService
     }
 
     public function compute(){
+
         $perm_latest_time_in = SuSettings::query()->where('setting','=','permanent_latest_time_in')->first()->time_value;
         $perm_earliest_time_out = SuSettings::query()->where('setting','=','permanent_earliest_time_out')->first()->time_value;
 
@@ -173,6 +176,22 @@ class DTRService extends BaseService
             ->orWhere('calculated' , '=' ,0)
             ->get();
         $no_of_computed = 0;
+
+        $monthsUsed = $dtrs->mapWithKeys(function ($data){
+            return [
+                Carbon::parse($data->date)->format('Y-m') => $data->date
+            ];
+        })->keys();
+        $holidays = Holiday::query()
+            ->where(function (Builder $query) use ($monthsUsed){
+                foreach ($monthsUsed as $month){
+                    $query->orWhere('date','like',$month.'%');
+                }
+            })
+            ->get();
+
+
+
         if(!empty($dtrs)){
             foreach ($dtrs as $dtr){
                 $late = 0;
@@ -244,6 +263,14 @@ class DTRService extends BaseService
                     }
                     $dtr->late = $late;
                     $dtr->undertime = $undertime;
+
+
+                    //if holiday
+                    if(!empty($holidays->firstWhere('date',$dtr->date))){
+                        $dtr->calculated = 1;
+                        $dtr->late = null;
+                        $dtr->undertime = null;
+                    }
                     $dtr->save();
                 }
 

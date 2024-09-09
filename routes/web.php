@@ -868,3 +868,7 @@ Route::get('regions',function (){
     });
     return Response::json($json,200,[],JSON_PRETTY_PRINT);
 });
+
+Route::get('comp',function (\App\Swep\Services\DTRService $DTRService){
+    return $DTRService->compute();
+});
