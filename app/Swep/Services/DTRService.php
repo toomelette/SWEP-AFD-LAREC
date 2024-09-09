@@ -172,10 +172,15 @@ class DTRService extends BaseService
         $jo_latest_time_in = SuSettings::query()->where('setting','=','jo_latest_time_in')->first()->time_value;
         $jo_earliest_time_out = SuSettings::query()->where('setting','=','jo_earliest_time_out')->first()->time_value;
 
-        $dtrs = DailyTimeRecord::query()->where('calculated','=',null)
-            ->orWhere('calculated' , '=' ,0)
-            ->orWhere('calculated' , '=' ,-1)
+        $dtrs = DailyTimeRecord::query()->where(function (Builder $query){
+                $query->where('calculated','=',null)
+                    ->orWhere('calculated' , '=' ,0)
+                    ->orWhere('calculated' , '=' ,-1);
+            })
+            ->where('date' ,'>',Carbon::now()->subMonths(2))
             ->get();
+
+
         $no_of_computed = 0;
 
         $monthsUsed = $dtrs->mapWithKeys(function ($data){
@@ -268,6 +273,13 @@ class DTRService extends BaseService
 
                     //if holiday
                     if(!empty($holidays->firstWhere('date',$dtr->date))){
+                        $dtr->calculated = 1;
+                        $dtr->late = null;
+                        $dtr->undertime = null;
+                    }
+
+                    //if all time record is null
+                    if(empty($dtr->am_in) && empty($dtr->am_out) && empty($dtr->pm_in) && empty($dtr->pm_out)){
                         $dtr->calculated = 1;
                         $dtr->late = null;
                         $dtr->undertime = null;
