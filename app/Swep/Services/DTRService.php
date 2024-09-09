@@ -174,6 +174,7 @@ class DTRService extends BaseService
 
         $dtrs = DailyTimeRecord::query()->where('calculated','=',null)
             ->orWhere('calculated' , '=' ,0)
+            ->orWhere('calculated' , '=' ,-1)
             ->get();
         $no_of_computed = 0;
 
