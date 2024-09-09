@@ -179,7 +179,7 @@ class DTRService extends BaseService
             })
             ->where('date' ,'>',Carbon::now()->subMonths(1))
             ->get();
-        dd($dtrs);
+
 
         $no_of_computed = 0;
 
