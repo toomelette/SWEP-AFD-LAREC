@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\ComputeLateUndertime::class,
         Commands\SanitizeBiometricDevice::class,
         Commands\UploadDtrs::class,
+        Commands\ApiUploadDTRToBacolod::class,
     ];
 
     /**
@@ -35,6 +36,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('dtr:extract')->everyTenMinutes();
         $schedule->command('dtr:reconstruct')->everyTenMinutes();
         $schedule->command('dtr:compute_late_undertime')->everyTenMinutes();
+        $schedule->command('dtr:api-upload')->everyThreeMinutes();
 //        $schedule->command('dtr:sanitizeBiometricDevices')->fridays()->at('18:00');
 //        $schedule->command('dtr:upload')->everyTenMinutes();
 //        $schedule->command('demo:cron')->everyMinute();
