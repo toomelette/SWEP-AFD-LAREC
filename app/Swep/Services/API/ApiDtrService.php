@@ -73,7 +73,7 @@ class ApiDtrService extends ApiService
 
 
             // Make a POST request
-            $response = $client->post('/api/dtr-lgarec/store',[
+            $response = $client->post('/api/dtr-larec/store',[
                 'headers' => $headers,
                 'json' => [
                     'daily_time_records' => $dailyTimeRecordsArray,
