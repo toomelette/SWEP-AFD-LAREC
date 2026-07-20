@@ -101,7 +101,7 @@ class ApiDtrService extends ApiService
 
         } catch (\Exception $e) {
             // Handle any errors that occur during the API request
-            dd($e->getMessage());
+
             // If unauthorized or token expired then login:
             if($e->getCode() == 401){
                 $token = $this->login('gjg021','admin12345');
